@@ -40,7 +40,7 @@ public class MainController {
             throw new RuntimeException(ex);
         }
         Stage stage = new Stage();
-        RegisterController.stage = stage;
+        QuizController.stage = stage;
         stage.setScene(new Scene(root));
         stage.show();
     }
