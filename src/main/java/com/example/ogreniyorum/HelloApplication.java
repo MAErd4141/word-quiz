@@ -1,5 +1,6 @@
 package com.example.ogreniyorum;
 
+import com.example.ogreniyorum.controllers.HelloController;
 import com.example.ogreniyorum.controllers.RegisterController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.setTitle("Kelime Quiz");
         stage.setScene(scene);
+        HelloController.stage = stage;
         stage.show();
 
     }

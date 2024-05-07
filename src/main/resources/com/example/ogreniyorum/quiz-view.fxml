@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="664.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ogreniyorum.controllers.QuizController">
+   <children>
+      <VBox fx:id="vbox" layoutX="234.0" layoutY="15.0" prefHeight="634.0" prefWidth="235.0" />
+      <Button fx:id="backButton" layoutX="71.0" layoutY="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="76.0" text="←">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="completeButton" layoutX="503.0" layoutY="295.0" mnemonicParsing="false" text="Sınavı Tamamla">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

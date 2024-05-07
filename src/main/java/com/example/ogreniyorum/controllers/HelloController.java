@@ -24,6 +24,9 @@ public class HelloController {
     private Button sifreunuttumbtnButton;
     @FXML
     private Button registerButton;
+
+    public static Stage stage;
+
     @FXML
     public void initialize() {
         loginButton.setOnAction(e -> {
@@ -35,6 +38,8 @@ public class HelloController {
                 infoLabel.setText("Bu email kayıtlı değil!");
             } else if(loginManager.validateLogin(emailField.getText(),passField.getText())){
                 infoLabel.setText("Giriş Başarılı!");//bu yazıyı yeşil renkli yap
+                goMainStage();
+                stage.hide();
             } else {
                 infoLabel.setText("Yanlış email ya da şifre!");
             }
@@ -53,5 +58,18 @@ public class HelloController {
 
 
         }));
+    }
+
+    private void goMainStage() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/example/ogreniyorum/main-view.fxml"));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        Stage stage = new Stage();
+        MainController.stage = stage;
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

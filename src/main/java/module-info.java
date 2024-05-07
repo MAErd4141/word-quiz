@@ -5,6 +5,7 @@ module com.example.ogreniyorum {
     requires java.sql;
 
 
+    opens com.example.ogreniyorum.Models to javafx.base;
     opens com.example.ogreniyorum to javafx.fxml;
     exports com.example.ogreniyorum;
     exports com.example.ogreniyorum.controllers;
