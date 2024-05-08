@@ -1,7 +1,11 @@
 package com.example.ogreniyorum.managers;
 
+import com.example.ogreniyorum.Models.Word;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuizManager {
@@ -9,8 +13,8 @@ public class QuizManager {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "12345678";
 
-    public Map<Integer, String> randomWordEng(Integer limit) {
-        Map<Integer, String> randomWordTrMap = new HashMap<>();
+    public List<Word> randomWordEng(Integer limit) {
+        List<Word> randomWordList = new ArrayList<Word>();
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             String query = "SELECT word_id, word_eng FROM words ORDER BY RAND() LIMIT ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -19,12 +23,15 @@ public class QuizManager {
             while (resultSet.next()) {
                 int id = resultSet.getInt("word_id");
                 String wordEng = resultSet.getString("word_eng");
-                randomWordTrMap.put(id, wordEng);
+                Word word = new Word(id,null,wordEng);
+                randomWordList.add(word);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return randomWordTrMap;
+        return randomWordList;
     }
     public boolean isCorrect(String tr, String eng) {
         boolean exists = false;

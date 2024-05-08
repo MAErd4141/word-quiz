@@ -1,5 +1,6 @@
 package com.example.ogreniyorum.controllers;
 
+import com.example.ogreniyorum.Models.Word;
 import com.example.ogreniyorum.managers.QuizManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,16 +35,14 @@ public class QuizController {
 
     public static Stage stage;
 
-    private Map<Integer, String> wordEngList;
-    private List<String> wordEngs;
+    private List<Word> randomWords;
     private List<String> textList;
 
     @FXML
     public void initialize(){
 
-        wordEngList = new HashMap<>();
+
         textList = new ArrayList<>();
-        wordEngs = new ArrayList<>();
 
 
         getRandomWordTr();
@@ -70,10 +69,10 @@ public class QuizController {
 
     private void checkResults() {
         QuizManager quizManager = new QuizManager();
-        for (int i = 0 ; i < wordEngList.values().size() ; i++) {
+        for (int i = 0 ; i < randomWords.size() ; i++) {
             Label label = new Label("sonuç");
             label.setStyle("-fx-font-size: 16px;");
-            boolean sonuc = quizManager.isCorrect(textList.get(i),wordEngs.get(i));
+            boolean sonuc = quizManager.isCorrect(textList.get(i),randomWords.get(i).getIngilizce());
 
             if (sonuc) {
                 label.setText("DOĞRU");
@@ -92,14 +91,13 @@ public class QuizController {
 
     private void getRandomWordTr() {
         QuizManager quizManager = new QuizManager();
-        wordEngList = quizManager.randomWordEng(10);
-        for (String word : wordEngList.values()) {
-            Label label = new Label(word);
+        randomWords = quizManager.randomWordEng(10);
+        for (Word word : randomWords) {
+            Label label = new Label(word.getIngilizce());
             label.setStyle("-fx-font-size: 16px;");
 
             TextField textField = new TextField();
             textField.setPromptText("Cevabı Giriniz");
-            wordEngs.add(word);
             vbox.getChildren().addAll(label, textField);
         }
     }

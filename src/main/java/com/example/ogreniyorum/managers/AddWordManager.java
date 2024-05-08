@@ -40,7 +40,7 @@ public class AddWordManager {
             ResultSet resultSet = statement.executeQuery();
             // Veritabanından gelen verileri ObservableList'e ekle
             while (resultSet.next()) {
-                wordList.add(new Word(resultSet.getString("word_tr"), resultSet.getString("word_eng")));
+                wordList.add(new Word(resultSet.getInt("word_id"),resultSet.getString("word_tr"), resultSet.getString("word_eng")));
             }
 
             return wordList;
