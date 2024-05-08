@@ -78,11 +78,11 @@ public class QuizController {
             if (sonuc) {
                 label.setText("DOĞRU");
                 label.setTextFill(Color.GREEN);
-                quizManager.addAnswer(2,randomWords.get(i).getWordId(),false,LocalDate.now(),1);
+                quizManager.addAnswer(HelloController.userId,randomWords.get(i).getWordId(),false,LocalDate.now(),1);
             } else {
                 label.setText("YANLIŞ");
                 label.setTextFill(Color.RED);
-                quizManager.addAnswer(2,randomWords.get(i).getWordId(),false,LocalDate.now(),0);
+                quizManager.addAnswer(HelloController.userId,randomWords.get(i).getWordId(),false,LocalDate.now(),0);
 
             }
 

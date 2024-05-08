@@ -36,4 +36,21 @@ public class LoginManager {
             return false;
         }
     }
+    public Integer IdByEmail(String email) {
+        Integer userId = null;
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "SELECT user_id FROM users WHERE email = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                userId = resultSet.getInt("user_id"); // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+            }
+           return userId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

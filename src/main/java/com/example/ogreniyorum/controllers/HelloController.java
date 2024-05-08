@@ -24,6 +24,7 @@ public class HelloController {
     private Button sifreunuttumbtnButton;
     @FXML
     private Button registerButton;
+    public static Integer userId;
 
     public static Stage stage;
 
@@ -38,6 +39,7 @@ public class HelloController {
                 infoLabel.setText("Bu email kayıtlı değil!");
             } else if(loginManager.validateLogin(emailField.getText(),passField.getText())){
                 infoLabel.setText("Giriş Başarılı!");//bu yazıyı yeşil renkli yap
+                userId = loginManager.IdByEmail(emailField.getText());
                 goMainStage();
                 stage.hide();
             } else {
