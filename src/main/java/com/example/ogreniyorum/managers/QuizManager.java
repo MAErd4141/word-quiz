@@ -3,6 +3,7 @@ package com.example.ogreniyorum.managers;
 import com.example.ogreniyorum.Models.Word;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,5 +49,22 @@ public class QuizManager {
             e.printStackTrace();
         }
         return exists;
+    }
+
+    public boolean addAnswer(Integer userId,Integer wordId,boolean isCompleted, LocalDate date, Integer correctCount) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "INSERT INTO answers (user_id, word_id, is_completed, correct_time, correct_count) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,userId);
+            statement.setInt(2,wordId );
+            statement.setBoolean(3,isCompleted);
+            statement.setDate(4, Date.valueOf(date));
+            statement.setInt(5, correctCount);
+            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
+            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
