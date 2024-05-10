@@ -26,12 +26,14 @@ public class MainController {
             stage.hide();
         });
         addWordButton.setOnAction( e -> {
-
             goAddWordStage();
             stage.hide();
         });
+        settingsButton.setOnAction(e -> {
+            goSettingsStage();
+            stage.hide();
+        });
     }
-
     private void goQuizStage() {
         Parent root = null;
         try {
@@ -53,6 +55,18 @@ public class MainController {
         }
         Stage stage = new Stage();
         AddWordController.stage = stage;
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    private void goSettingsStage() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/example/ogreniyorum/settings-view.fxml"));//değişecek
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        Stage stage = new Stage();
+        SettingsController.stage = stage;//değişecek
         stage.setScene(new Scene(root));
         stage.show();
     }

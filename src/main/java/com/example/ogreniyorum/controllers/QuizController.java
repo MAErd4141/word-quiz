@@ -1,6 +1,7 @@
 package com.example.ogreniyorum.controllers;
 
 import com.example.ogreniyorum.Models.Word;
+import com.example.ogreniyorum.managers.AddWordManager;
 import com.example.ogreniyorum.managers.QuizManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,12 +79,18 @@ public class QuizController {
             if (sonuc) {
                 label.setText("DOĞRU");
                 label.setTextFill(Color.GREEN);
-                quizManager.addAnswer(HelloController.userId,randomWords.get(i).getWordId(),false,LocalDate.now(),1);
+                if(quizManager.isThere(HelloController.userId,randomWords.get(i).getWordId())){
+                    quizManager.increaseCorrectCount(HelloController.userId,randomWords.get(i).getWordId());
+                }else {
+                    quizManager.addAnswer(HelloController.userId,randomWords.get(i).getWordId(),false,LocalDate.now(),1);
+                    quizManager.deleteFromWords(randomWords.get(i).getWordId());
+                }
             } else {
                 label.setText("YANLIŞ");
                 label.setTextFill(Color.RED);
-                quizManager.addAnswer(HelloController.userId,randomWords.get(i).getWordId(),false,LocalDate.now(),0);
-
+                quizManager.deleteFromAnswers(HelloController.userId,randomWords.get(i).getWordId());
+                AddWordManager addWordManager = new AddWordManager();
+                //KELİMEYİ GERİ EKLEYECEKSİN!
             }
 
             resultVBox.setSpacing(25.5);

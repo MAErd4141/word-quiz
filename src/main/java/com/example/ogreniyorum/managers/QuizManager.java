@@ -67,5 +67,64 @@ public class QuizManager {
             return false;
         }
     }
+    public boolean increaseCorrectCount(Integer userId,Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "UPDATE answers SET correct_count = correct_count + 1, correct_time = CURRENT_DATE WHERE user_id = ? AND word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, wordId);
+            ResultSet resultSet = statement.executeQuery();
+            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
+            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean deleteFromAnswers(Integer userId,Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "DELETE FROM answers WHERE user_id = ? AND word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, wordId);
+            ResultSet resultSet = statement.executeQuery();
+            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
+            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteFromWords(Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "DELETE FROM words WHERE word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, wordId);
+            ResultSet resultSet = statement.executeQuery();
+            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
+            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean isThere(Integer userId, Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "SELECT COUNT(*) AS is_there FROM answers WHERE user_id = ? AND word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, wordId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt("is_there");
+                return count > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+            } else {
+                return false; // Sonuç yoksa, kullanıcı kaydı yoktur.
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
