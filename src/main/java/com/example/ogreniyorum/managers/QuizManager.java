@@ -17,14 +17,15 @@ public class QuizManager {
     public List<Word> randomWordEng(Integer limit) {
         List<Word> randomWordList = new ArrayList<Word>();
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            String query = "SELECT word_id, word_eng FROM words ORDER BY RAND() LIMIT ?";
+            String query = "SELECT word_id, word_eng, word_tr FROM words ORDER BY RAND() LIMIT ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, limit);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("word_id");
                 String wordEng = resultSet.getString("word_eng");
-                Word word = new Word(id,null,wordEng);
+                String wordTr = resultSet.getString("word_tr");
+                Word word = new Word(id,wordTr,wordEng);
                 randomWordList.add(word);
 
             }
@@ -73,7 +74,6 @@ public class QuizManager {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             statement.setInt(2, wordId);
-            ResultSet resultSet = statement.executeQuery();
             int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
             return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
         } catch (Exception e) {
@@ -101,7 +101,6 @@ public class QuizManager {
             String query = "DELETE FROM words WHERE word_id = ?;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, wordId);
-            ResultSet resultSet = statement.executeQuery();
             int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
             return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
         } catch (Exception e) {
@@ -122,6 +121,36 @@ public class QuizManager {
             } else {
                 return false; // Sonuç yoksa, kullanıcı kaydı yoktur.
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public Integer getCorrectCount(Integer userId,Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            Integer correctCount = null;
+            String query = "SELECT correct_count FROM answers WHERE user_id = ? AND word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, wordId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                correctCount = resultSet.getInt("correct_count");
+            }
+            return correctCount;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public boolean resetCorrectCount(Integer userId,Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "UPDATE answers SET correct_count = 0, correct_time = CURRENT_DATE WHERE user_id = ? AND word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, wordId);
+            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
+            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
         } catch (Exception e) {
             e.printStackTrace();
             return false;

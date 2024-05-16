@@ -83,14 +83,14 @@ public class QuizController {
                     quizManager.increaseCorrectCount(HelloController.userId,randomWords.get(i).getWordId());
                 }else {
                     quizManager.addAnswer(HelloController.userId,randomWords.get(i).getWordId(),false,LocalDate.now(),1);
-                    quizManager.deleteFromWords(randomWords.get(i).getWordId());
                 }
             } else {
                 label.setText("YANLIŞ");
                 label.setTextFill(Color.RED);
-                quizManager.deleteFromAnswers(HelloController.userId,randomWords.get(i).getWordId());
-                AddWordManager addWordManager = new AddWordManager();
-                //KELİMEYİ GERİ EKLEYECEKSİN!
+                if(quizManager.isThere(HelloController.userId,randomWords.get(i).getWordId())){
+                    quizManager.resetCorrectCount(HelloController.userId,randomWords.get(i).getWordId());
+                }
+
             }
 
             resultVBox.setSpacing(25.5);
