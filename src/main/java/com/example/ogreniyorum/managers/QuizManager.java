@@ -1,13 +1,13 @@
 package com.example.ogreniyorum.managers;
 
+import com.example.ogreniyorum.Models.Answer;
 import com.example.ogreniyorum.Models.Word;
+import com.example.ogreniyorum.controllers.HelloController;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class QuizManager {
     private static final String URL = "jdbc:mysql://localhost:3306/kelimequiz";
@@ -17,17 +17,30 @@ public class QuizManager {
     public List<Word> randomWordEng(Integer limit) {
         List<Word> randomWordList = new ArrayList<Word>();
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            String query = "SELECT word_id, word_eng, word_tr FROM words ORDER BY RAND() LIMIT ?";
+            String query = "SELECT * FROM words ORDER BY RAND();";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, limit);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            int sayac = 0; //sonsuz döngüden çıkar
+            //words tablosunda correctcount 0 olan kelime kalmazsa sonsuz döngüye girme riski var
+            while (resultSet.next() && randomWordList.size() < limit) {
+                sayac++;
+                QuizManager quizManager = new QuizManager();
                 int id = resultSet.getInt("word_id");
                 String wordEng = resultSet.getString("word_eng");
                 String wordTr = resultSet.getString("word_tr");
-                Word word = new Word(id,wordTr,wordEng);
-                randomWordList.add(word);
 
+                if (!quizManager.isThere(HelloController.userId,id)) { // "correct count" 0 değilse ekleme
+                    Word word = new Word(id, wordTr, wordEng);
+                    randomWordList.add(word);
+                } else{
+                    if(quizManager.getCorrectCount(HelloController.userId,id) == 0) {
+                        Word word = new Word(id, wordTr, wordEng);
+                        randomWordList.add(word);
+                    }
+                }
+                if(sayac > 250) {
+                    break;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,18 +109,6 @@ public class QuizManager {
             return false;
         }
     }
-    public boolean deleteFromWords(Integer wordId) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            String query = "DELETE FROM words WHERE word_id = ?;";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, wordId);
-            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
-            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
     public boolean isThere(Integer userId, Integer wordId) {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             String query = "SELECT COUNT(*) AS is_there FROM answers WHERE user_id = ? AND word_id = ?;";
@@ -155,5 +156,50 @@ public class QuizManager {
             e.printStackTrace();
             return false;
         }
+    }
+    public LocalDate getCorrectDate(Integer userId, Integer wordId) {
+        LocalDate date = null;
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "SELECT correct_time FROM answers WHERE user_id = ? AND word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, wordId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                date = resultSet.getDate("correct_time").toLocalDate();
+            } else {
+                System.out.println("No data found for userId: " + userId + " and wordId: " + wordId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+    public List<Answer> getAnswers(Integer count, Integer diff) {
+        List<Answer> answers = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "SELECT * FROM answers WHERE correct_count = ? AND DATEDIFF(CURDATE(), correct_time) > ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, count);
+            statement.setInt(2, diff);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+
+                Integer userId = resultSet.getInt("user_id");
+                Integer wordId = resultSet.getInt("word_id");
+                boolean isCompleted =resultSet.getBoolean("is_completed");
+                LocalDate date = resultSet.getDate("correct_time").toLocalDate();
+                Integer correctCount = resultSet.getInt("correct_count");
+
+                Answer answer = new Answer(userId,wordId,isCompleted,date,correctCount);
+                answers.add(answer);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return answers;
     }
 }

@@ -9,10 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
-public class AddWordManager {
+public class WordManager {
     private static final String URL = "jdbc:mysql://localhost:3306/kelimequiz";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "12345678";
@@ -44,6 +43,37 @@ public class AddWordManager {
             }
 
             return wordList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public boolean deleteFromWords(Integer wordId) {
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String query = "DELETE FROM words WHERE word_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, wordId);
+            int rowsAffected = statement.executeUpdate(); // INSERT, UPDATE, DELETE işlemleri için executeUpdate() kullanılır
+            return rowsAffected > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public Word getOneWord(Integer wordId) {
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            Word word = null;
+            String query = "SELECT * FROM words WHERE word_id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,wordId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String wordTr = resultSet.getString("word_tr");
+                String wordEng = resultSet.getString("word_eng");
+                word = new Word(wordId,wordTr,wordEng);
+            }
+            return word;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

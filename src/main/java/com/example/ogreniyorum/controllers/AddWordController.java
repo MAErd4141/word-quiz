@@ -1,7 +1,7 @@
 package com.example.ogreniyorum.controllers;
 
 import com.example.ogreniyorum.Models.Word;
-import com.example.ogreniyorum.managers.AddWordManager;
+import com.example.ogreniyorum.managers.WordManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,8 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddWordController {
 
@@ -41,7 +39,7 @@ public class AddWordController {
     @FXML
     public void initialize() {
 
-        AddWordManager addWordManager = new AddWordManager();
+        WordManager addWordManager = new WordManager();
         wordList = addWordManager.getAllWords();
         // TableColumn'ların PropertyValueFactory'leri ayarlanıyor
         column1.setCellValueFactory(new PropertyValueFactory<>("turkce"));

@@ -6,36 +6,44 @@ import java.time.LocalDate;
 
 public class Answer {
 
+    public Answer(Integer userId,Integer wordId,boolean isCompleted, LocalDate correctTime,Integer correctCount) {
+        setUserId(userId);
+        setWordId(wordId);
+        setIsCompleted(isCompleted);
+        setCorrectCount(correctCount);
+        setCorrectTime(correctTime);
+    }
+
     private final IntegerProperty userId = new SimpleIntegerProperty();
 
     private final IntegerProperty wordId = new SimpleIntegerProperty();
     private final BooleanProperty isCompleted = new SimpleBooleanProperty();
-    private final ObjectProperty<LocalDate> correct_time = new SimpleObjectProperty<LocalDate>();
-    private final IntegerProperty correct_count = new SimpleIntegerProperty();
+    private final ObjectProperty<LocalDate> correctTime = new SimpleObjectProperty<LocalDate>();
+    private final IntegerProperty correctCount = new SimpleIntegerProperty();
 
 
-    public int getCorrect_count() {
-        return correct_count.get();
+    public int getCorrectCount() {
+        return correctCount.get();
     }
 
-    public IntegerProperty correct_countProperty() {
-        return correct_count;
+    public IntegerProperty correctCountProperty() {
+        return correctCount;
     }
 
-    public void setCorrect_count(int correct_count) {
-        this.correct_count.set(correct_count);
+    public void setCorrectCount(int correctCount) {
+        this.correctCount.set(correctCount);
     }
 
-    public LocalDate getCorrect_time() {
-        return correct_time.get();
+    public LocalDate getCorrectTime() {
+        return correctTime.get();
     }
 
-    public ObjectProperty<LocalDate> correct_timeProperty() {
-        return correct_time;
+    public ObjectProperty<LocalDate> correctTimeProperty() {
+        return correctTime;
     }
 
-    public void setCorrect_time(LocalDate correct_time) {
-        this.correct_time.set(correct_time);
+    public void setCorrectTime(LocalDate correctTime) {
+        this.correctTime.set(correctTime);
     }
 
     public boolean isIsCompleted() {
