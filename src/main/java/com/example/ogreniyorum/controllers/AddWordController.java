@@ -50,7 +50,7 @@ public class AddWordController {
 
         addButton.setOnAction( e -> {
             if (engTextField.getText().isEmpty() || trTextField.getText().isEmpty()) {
-                infoLabel.setText("Alanları boş bırakmayınız!");
+                infoLabel.setText("Alanları boş bırakmayınız lütfen!");
             } else {
                 addWordManager.addWord(trTextField.getText(),engTextField.getText());
                 infoLabel.setText("Kelime eklendi!");
