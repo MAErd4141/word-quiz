@@ -13,7 +13,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ogreniyorum.controllers.HelloController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="246.0" style="-fx-background-color: #07004F;">
+      <AnchorPane prefHeight="400.0" prefWidth="246.0" style="-fx-background-color: #2312c4;">
          <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="143.0" prefHeight="95.0" prefWidth="216.0" text="Kelime Quiz" textAlignment="CENTER" textFill="WHITE" textOverrun="LEADING_ELLIPSIS">
                <font>
@@ -49,7 +49,7 @@
                   <Image url="@../../../password.png" />
                </image>
             </ImageView>
-            <Label fx:id="infoLabel" alignment="CENTER" layoutX="3.0" layoutY="346.0" prefHeight="18.0" prefWidth="265.0" textFill="#fc0000" />
+            <Label fx:id="infoLabel" alignment="CENTER" layoutX="3.0" layoutY="346.0" prefHeight="18.0" prefWidth="265.0" textFill="#fc463b"/>
             <Button fx:id="registerButton" layoutX="51.0" layoutY="321.0" mnemonicParsing="false" text="Üye Ol" />
             <Button fx:id="sifreunuttumbtn" layoutX="125.0" layoutY="321.0" mnemonicParsing="false" text="Şifremi Unuttum" />
          </children>

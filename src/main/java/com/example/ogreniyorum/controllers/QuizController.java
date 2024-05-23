@@ -49,8 +49,8 @@ public class QuizController {
         knownWords = new ArrayList<>();
         getRandomWordTr();
         getKnownWords(1, 1, "yellow");
-        getKnownWords(2, 7, "orange");
-        getKnownWords(3, 30, "red");
+        getKnownWords(3, 8, "orange");
+        getKnownWords(4, 32, "red");
         getKnownWords(4, 91, "blue");
         getKnownWords(5, 182, "purple");
         getKnownWords(6, 365, "green");
@@ -130,10 +130,10 @@ public class QuizController {
         randomWords = quizManager.randomWordEng(10);
         for (Word word : randomWords) {
             Label label = new Label(word.getIngilizce());
-            label.setStyle("-fx-font-size: 16px;");
+            label.setStyle("-fx-font-size: 20px;");
 
             TextField textField = new TextField();
-            textField.setPromptText("Cevabı Giriniz");
+            textField.setPromptText("Cevabı Giriniz lütfen!");
             vbox.getChildren().addAll(label, textField);
         }
     }

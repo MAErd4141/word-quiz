@@ -13,7 +13,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ogreniyorum.controllers.RegisterController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="246.0" style="-fx-background-color: #07004F;">
+      <AnchorPane prefHeight="400.0" prefWidth="246.0" style="-fx-background-color: #3021bb;">
          <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="143.0" prefHeight="95.0" prefWidth="216.0" text="Kelime Quiz" textAlignment="CENTER" textFill="WHITE" textOverrun="LEADING_ELLIPSIS">
                <font>
