@@ -50,7 +50,7 @@ public class RegisterController {
             } else if (!passField.getText().equals(confirmPassField.getText())) {
                 infoLabel.setText("Şifreler eşleşmiyor!");
             } else if (registerManager.isThere(emailField.getText())) {
-                infoLabel.setText("Bu email zaten kayıtlı!");
+                infoLabel.setText("This email alredy exist!");
             } else {
                 registerManager.register(fullNameTextField.getText(), emailField.getText(), passField.getText());
                 infoLabel.setText("Kayıt Başarılı!! Lütfen Bekleyin..");

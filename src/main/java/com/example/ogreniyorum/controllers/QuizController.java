@@ -79,8 +79,8 @@ public class QuizController {
     private void checkResults() {
         QuizManager quizManager = new QuizManager();
         for (int i = 0; i < randomWords.size(); i++) {
-            Label label = new Label("sonuç");
-            label.setStyle("-fx-font-size: 16px;");
+            Label label = new Label("sonuc");
+            label.setStyle("-fx-font-size: 20px;");
             boolean sonuc = quizManager.isCorrect(textList.get(i), randomWords.get(i).getIngilizce());
 
             if (sonuc) {
@@ -130,10 +130,10 @@ public class QuizController {
         randomWords = quizManager.randomWordEng(10);
         for (Word word : randomWords) {
             Label label = new Label(word.getIngilizce());
-            label.setStyle("-fx-font-size: 20px;");
+            label.setStyle("-fx-font-size: 16px;");
 
             TextField textField = new TextField();
-            textField.setPromptText("Cevabı Giriniz lütfen!");
+            textField.setPromptText("Cevabı Giriniz!");
             vbox.getChildren().addAll(label, textField);
         }
     }
@@ -149,9 +149,9 @@ public class QuizController {
         }
         for (Word word : words) {
             Label label = new Label(word.getIngilizce());
-            label.setStyle("-fx-font-size: 16px; -fx-text-fill: " + color + ";"); // Renk değerini color parametresinden al
+            label.setStyle("-fx-font-size: 16px; -fx-text-fill: " + color + ";");
             TextField textField = new TextField();
-            textField.setPromptText("Cevabı Giriniz");
+            textField.setPromptText("Cevabı Giriniz lütfen");
             vbox.getChildren().addAll(label, textField);
         }
     }

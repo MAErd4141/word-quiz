@@ -43,7 +43,7 @@ public class HelloController {
                 goMainStage();
                 stage.hide();
             } else {
-                infoLabel.setText("Yanlış email ya da şifre!");
+                infoLabel.setText("Yanlış email ya da şifre tekrar giriniz !");
             }
         });
         registerButton.setOnAction((e ->{
