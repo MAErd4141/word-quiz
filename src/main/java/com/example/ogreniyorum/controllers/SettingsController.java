@@ -14,23 +14,28 @@ public class SettingsController {
 
     public static Stage stage;
     @FXML
-    private Spinner Spinner;
+    private ComboBox<Integer> comboBox;
 
     @FXML
-    private Button Button;
+    private Label infoLabel;
 
     @FXML
-    private TextArea Textarea;
-
+    private Button saveButton;
     @FXML
     private Button backButton;
-
+    public static Integer selectedValue = 10;
     public void initialize() {
-
+        comboBox.getItems().addAll(5, 10, 15, 20);
         backButton.setOnAction(e -> {
             stage.close();
             goToMainStage();
         });
+
+        saveButton.setOnAction(e -> {
+            selectedValue = comboBox.getValue();
+            infoLabel.setText("Başarıyla Kaydedildi!");
+        });
+
     }
     private void goToMainStage() {
         Parent root = null;
@@ -40,7 +45,7 @@ public class SettingsController {
             throw new RuntimeException(ex);
         }
         Stage stage = new Stage();
-        AddWordController.stage = stage;
+        SettingsController.stage = stage;
         stage.setScene(new Scene(root));
         stage.show();
     }

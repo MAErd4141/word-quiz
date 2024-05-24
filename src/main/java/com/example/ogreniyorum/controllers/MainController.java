@@ -61,12 +61,12 @@ public class MainController {
     private void goSettingsStage() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/ogreniyorum/settings-view.fxml"));//değişecek
+            root = FXMLLoader.load(getClass().getResource("/com/example/ogreniyorum/settings-view.fxml"));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
         Stage stage = new Stage();
-        SettingsController.stage = stage;//değişecek
+        SettingsController.stage = stage;
         stage.setScene(new Scene(root));
         stage.show();
     }
