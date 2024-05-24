@@ -13,3 +13,7 @@ Sınav Modülü:kullanıcılar ayarlar kısmından 5,10,15,20 şeklinde kelime s
 Ayarlar Modülü:Ayarlar kısmından kullanıcı kaç kelime üzerinden pratik yapabileceğini seçebilir.
 
 3-)Projede kullanılan yazılım dili:IntellijIDEA kullanarak projemizi JAVAFX de oluşturduk,SceneBuilder üzerinden de arayüz tasarımını gerçekleştirdik
+
+
+![Ekran Alıntısı](https://github.com/MAErd4141/word-quiz/assets/154934079/dd07371b-9d19-4fae-94df-c9ffb1f82e26)
+
