@@ -34,11 +34,11 @@ public class HelloController {
             infoLabel.setText("");
             LoginManager loginManager = new LoginManager();
             if (emailField.getText().isEmpty() || passField.getText().isEmpty()) {
-                infoLabel.setText("Alanları boş bırakmayınız!");
+                infoLabel.setText("Alanları boş bırakmayınız !");
             } else if(!loginManager.isThere(emailField.getText())){
                 infoLabel.setText("Bu email kayıtlı değil!");
             } else if(loginManager.validateLogin(emailField.getText(),passField.getText())){
-                infoLabel.setText("Giriş Başarılı!");//bu yazıyı yeşil renkli yap
+                infoLabel.setText("Giriş Başarılı!");
                 userId = loginManager.IdByEmail(emailField.getText());
                 goMainStage();
                 stage.hide();

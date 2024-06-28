@@ -4,7 +4,6 @@ import com.example.ogreniyorum.Models.Answer;
 import com.example.ogreniyorum.Models.Word;
 import com.example.ogreniyorum.managers.QuizManager;
 import com.example.ogreniyorum.managers.WordManager;
-import com.example.ogreniyorum.utils.DateUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,6 +38,7 @@ public class QuizController {
 
     private List<Word> randomWords;
     private List<Word> knownWords;
+
     private List<String> textList;
 
     @FXML
@@ -46,7 +46,7 @@ public class QuizController {
 
 
         textList = new ArrayList<>();
-
+        knownWords = new ArrayList<>();
         getRandomWordTr();
         getKnownWords(1, 1, "yellow");
         getKnownWords(2, 7, "orange");
@@ -86,7 +86,6 @@ public class QuizController {
             if (sonuc) {
 
                 label.setText("DOĞRU");
-
                 label.setTextFill(Color.GREEN);
                 if (quizManager.isThere(HelloController.userId, randomWords.get(i).getWordId())) {
 
@@ -102,6 +101,24 @@ public class QuizController {
                     quizManager.resetCorrectCount(HelloController.userId, randomWords.get(i).getWordId());
                 }
 
+            }
+            resultVBox.setSpacing(25.5);
+            resultVBox.getChildren().add(label);
+        }
+
+        for (int i = randomWords.size(); i < knownWords.size() + randomWords.size(); i++) {
+            int j = i - randomWords.size();
+            Label label = new Label("sonuç");
+            label.setStyle("-fx-font-size: 16px;");
+            boolean sonuc = quizManager.isCorrect(textList.get(i), knownWords.get(j).getIngilizce());
+            if (sonuc) {
+                label.setText("DOĞRU");
+                label.setTextFill(Color.GREEN);
+                quizManager.increaseCorrectCount(HelloController.userId, knownWords.get(j).getWordId());
+            } else {
+                label.setText("YANLIŞ");
+                label.setTextFill(Color.RED);
+                quizManager.resetCorrectCount(HelloController.userId, knownWords.get(j).getWordId());
             }
             resultVBox.setSpacing(25.5);
             resultVBox.getChildren().add(label);
@@ -124,13 +141,13 @@ public class QuizController {
     private void getKnownWords(Integer count, Integer diff, String color) {
         QuizManager quizManager = new QuizManager();
         WordManager wordManager = new WordManager();
+        List<Word> words = new ArrayList<>();
         List<Answer> answers = quizManager.getAnswers(count, diff);
-        knownWords = new ArrayList<>();
-        for(Answer answer : answers){
+        for (Answer answer : answers) {
+            words.add(wordManager.getOneWord(answer.getWordId()));
             knownWords.add(wordManager.getOneWord(answer.getWordId()));
         }
-
-        for (Word word : knownWords) {
+        for (Word word : words) {
             Label label = new Label(word.getIngilizce());
             label.setStyle("-fx-font-size: 16px; -fx-text-fill: " + color + ";"); // Renk değerini color parametresinden al
             TextField textField = new TextField();

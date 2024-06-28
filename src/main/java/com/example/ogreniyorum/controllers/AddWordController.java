@@ -53,7 +53,7 @@ public class AddWordController {
                 infoLabel.setText("Alanları boş bırakmayınız!");
             } else {
                 addWordManager.addWord(trTextField.getText(),engTextField.getText());
-                infoLabel.setText("Kelime Eklendi!");
+                infoLabel.setText("Kelime eklendi!");
 
             }
 

@@ -117,7 +117,7 @@ public class QuizManager {
             statement.setInt(2, wordId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int count = resultSet.getInt("is_there");
+                int count = resultSet.getInt("is there");
                 return count > 0; // Eğer sonuç varsa, kullanıcı doğrulanmıştır.
             } else {
                 return false; // Sonuç yoksa, kullanıcı kaydı yoktur.

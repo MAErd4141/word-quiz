@@ -66,7 +66,7 @@ public class MainController {
             throw new RuntimeException(ex);
         }
         Stage stage = new Stage();
-        SettingsController.stage = stage;//değişecek
+        SettingsController.stage = stage;
         stage.setScene(new Scene(root));
         stage.show();
     }
